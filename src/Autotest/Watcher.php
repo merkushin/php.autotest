@@ -62,20 +62,11 @@ class Watcher
     private function countCheckSumForPath($path)
     {
         $hashes = array();
-        $iterator = new \DirectoryIterator($path);
-        /**
-         * @var \DirectoryIterator $item
-         */
-        foreach ($iterator as $item) {
-            if ($item->isDot()) {
-                continue;
-            } elseif ($item->isDir()) {
-                $hashes = array_merge($hashes, $this->countCheckSumForPath($item->getPathname()));
-            } else {
-                if (preg_match('/\.php$/', $item->getFilename())) {
-                    $hashes[$item->getPathname()] = md5_file($item->getPathname());
-                }
-            }
+        $Directory = new \RecursiveDirectoryIterator($path);
+        $Iterator = new \RecursiveIteratorIterator($Directory);
+        $Regex = new \RegexIterator($Iterator, '/^.+\.(php|phtml|inc)$/i', \RecursiveRegexIterator::GET_MATCH);
+        foreach ($Regex as $filename => $_) {
+            $hashes[$filename] = md5_file($filename);
         }
         return $hashes;
     }

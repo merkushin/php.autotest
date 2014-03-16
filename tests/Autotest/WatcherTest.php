@@ -10,6 +10,10 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
         if (file_exists($this->getTestFilename())) {
             unlink($this->getTestFilename());
         }
+
+        if (file_exists($this->getNonPhpTestFile())) {
+            unlink($this->getNonPhpTestFile());
+        }
     }
 
     public function testClassExists()
@@ -48,9 +52,24 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($this->getTestFilename()), $watcher->getChanges());
     }
 
+    public function testWatchChangesOnlyForPhpFiles()
+    {
+        $watcher = new Watcher($this->getFixturesPath());
+        $watcher->watch();
+        file_put_contents($this->getTestFilename(), 'xyz');
+        file_put_contents($this->getNonPhpTestFile(), 'xyz');
+        $this->assertTrue($watcher->hasChanged(), 'File was changed');
+        $this->assertEquals(array($this->getTestFilename()), $watcher->getChanges());
+    }
+
     private function getTestFilename()
     {
         return $this->getFixturesPath() .  '/test.php';
+    }
+
+    private function getNonPhpTestFile()
+    {
+        return $this->getFixturesPath() .  '/test.txt';
     }
 
     private function getFixturesPath()
