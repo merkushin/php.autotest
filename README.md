@@ -26,7 +26,7 @@ Run bin/autotest.php with optional params from the root of your application:
 * ```cmd``` — path to phpunit (optional, default value: phpunit)
 * ```src_path``` — path to your source code (optional, default value: src)
 * ```tests_path``` — path to your tests (optional, default value: tests)
-* ```timeout``` — time between comparing files (optional, default value: 5)
+* ```timeout``` — time between comparing files (optional, default value: 1 second)
 
 Example (assuming file is linked to bin directory):
 
