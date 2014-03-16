@@ -31,11 +31,13 @@ class AutotestTest extends \PHPUnit_Framework_TestCase
 
     private function getConfigMock()
     {
-        $mock = $this->getMock('Autotest\Config', array(
-            'getTestsPath',
-            'getSrcPath',
-
-        ));
+        $mock = $this->getMockBuilder('Autotest\Config')
+            ->disableOriginalConstructor()
+            ->setMethods(array(
+                'getTestsPath',
+                'getSrcPath',
+            ))
+            ->getMock();
         $mock->expects($this->any())
             ->method('getTestsPath')
             ->will($this->returnValue('/some/path/tests'));
