@@ -7,7 +7,7 @@ class Config
     private $cmd = 'phpunit';
     private $srcPath = '';
     private $testsPath = '';
-    private $timeout = 5;
+    private $timeout = 1;
 
     public function __construct($applicationPath)
     {
