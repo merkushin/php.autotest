@@ -21,11 +21,7 @@ class Watcher
 
     public function watch()
     {
-        if ($this->lastCheckSum = $this->countCheckSum()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool)($this->lastCheckSum = $this->countCheckSum());
     }
 
     public function hasChanged()
