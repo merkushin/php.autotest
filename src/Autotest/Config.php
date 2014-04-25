@@ -16,32 +16,30 @@ class Config
         $this->testsPath = $this->applicationPath . DIRECTORY_SEPARATOR . 'tests';
     }
 
-    public function parse($args)
+    public function setOptions($options)
     {
-        array_shift($args);
-        foreach ($args as $arg) {
-            switch (true) {
-                case preg_match('#^--cmd=([\w/]+)$#', $arg, $matches) :
-                    $this->cmd = $matches[1];
-                    break;
-                case preg_match('#^--src_path=([\w/]+)$#', $arg, $matches) :
-                    $srcPath = $matches[1];
-                    if ($this->isPathRelative($srcPath)) {
-                        $srcPath = $this->convertRelativePathToAbsolute($srcPath);
-                    }
-                    $this->srcPath = $srcPath;
-                    break;
-                case preg_match('#^--tests_path=([\w/]+)$#', $arg, $matches) :
-                    $testsPath = $matches[1];
-                    if ($this->isPathRelative($testsPath)) {
-                        $testsPath = $this->convertRelativePathToAbsolute($testsPath);
-                    }
-                    $this->testsPath = $testsPath;
-                    break;
-                case preg_match('#^--timeout=(\d+)$#', $arg, $matches) :
-                    $this->timeout = (int)$matches[1];
-                    break;
+        if (!empty($options['cmd'])) {
+            $this->cmd = $options['cmd'];
+        }
+
+        if (!empty($options['src_path'])) {
+            $srcPath = $options['src_path'];
+            if ($this->isPathRelative($srcPath)) {
+                $srcPath = $this->convertRelativePathToAbsolute($srcPath);
             }
+            $this->srcPath = $srcPath;
+        }
+
+        if (!empty($options['tests_path'])) {
+            $testsPath = $options['tests_path'];
+            if ($this->isPathRelative($testsPath)) {
+                $testsPath = $this->convertRelativePathToAbsolute($testsPath);
+            }
+            $this->testsPath = $testsPath;
+        }
+
+        if (!empty($options['timeout'])) {
+            $this->timeout = $options['timeout'];
         }
     }
 

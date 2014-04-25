@@ -26,12 +26,11 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testParse()
     {
         $config = new Config($this->getApplicationPath());
-        $config->parse(array(
-            'script.php',
-            '--cmd=/sebastian/phpunit',
-            '--src_path=/src/of/my/code',
-            '--tests_path=/tests/for/my/code',
-            '--timeout=10',
+        $config->setOptions(array(
+            'cmd' => '/sebastian/phpunit',
+            'src_path' => '/src/of/my/code',
+            'tests_path' => '/tests/for/my/code',
+            'timeout' => '10',
         ));
 
         $this->assertEquals('/sebastian/phpunit', $config->getCmd(), 'Command does not match');
@@ -43,10 +42,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testRelativePaths()
     {
         $config = new Config($this->getApplicationPath());
-        $config->parse(array(
-            'script.php',
-            '--src_path=src/',
-            '--tests_path=tests/',
+        $config->setOptions(array(
+            'src_path' => 'src/',
+            'tests_path' => 'tests/',
         ));
 
         $this->assertEquals($this->getApplicationPath() . '/src', $config->getSrcPath(), 'Source code path does not match');

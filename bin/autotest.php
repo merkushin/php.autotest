@@ -1,14 +1,12 @@
 #!/usr/bin/env php
 <?php
-require_once __DIR__ . '/../src/Autotest/Config.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/Autotest/Console/Application.php';
 require_once __DIR__ . '/../src/Autotest/Autotest.php';
 
 try {
-    $config = new \Autotest\Config(getcwd());
-    $config->parse($argv);
-
-    $autotest = new \Autotest\Autotest($config);
-    $autotest->run();
+    $application = new \Autotest\Console\Application();
+    $application->run();
 } catch (\Exception $e) {
     echo 'Error: ' . $e->getMessage() . PHP_EOL;
 }

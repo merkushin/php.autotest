@@ -6,11 +6,21 @@ Requirements
 
 * PHP 5.3+
 * PHPUnit
+* Symfony/Console
 
 Installation
 ---
 
 Download and unpack php.autotest.
+
+Download Composer (http://getcomposer.org) and run:
+
+```
+composer.phar install
+```
+
+Composer installs Console component
+
 
 Optionally link bin/autotest.php to your /usr/bin like this:
 
