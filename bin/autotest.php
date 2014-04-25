@@ -2,7 +2,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Autotest/Console/Application.php';
-require_once __DIR__ . '/../src/Autotest/Autotest.php';
 
 try {
     $application = new \Autotest\Console\Application();
