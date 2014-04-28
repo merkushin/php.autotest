@@ -23,24 +23,25 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->getApplicationPath() . '/src', $config->getSrcPath());
     }
 
-    public function testParse()
+    public function testSetOptions()
     {
         $config = new Config($this->getApplicationPath());
         $config->setOptions(array(
             'cmd' => '/sebastian/phpunit',
-            'src_path' => '/src/of/my/code',
-            'tests_path' => '/tests/for/my/code',
+            'src_path' => $this->getApplicationPath() . '/src',
+            'tests_path' => $this->getApplicationPath() . '/tests',
             'timeout' => '10',
         ));
 
         $this->assertEquals('/sebastian/phpunit', $config->getCmd(), 'Command does not match');
-        $this->assertEquals('/src/of/my/code', $config->getSrcPath(), 'Source code path does not match');
-        $this->assertEquals('/tests/for/my/code', $config->getTestsPath(), 'Tests path does not match');
+        $this->assertEquals($this->getApplicationPath() . '/src', $config->getSrcPath(), 'Source code path does not match');
+        $this->assertEquals($this->getApplicationPath() . '/tests', $config->getTestsPath(), 'Tests path does not match');
         $this->assertEquals(10, $config->getTimeout(), 'Timeout does not match');
     }
 
     public function testRelativePaths()
     {
+        chdir($this->getApplicationPath());
         $config = new Config($this->getApplicationPath());
         $config->setOptions(array(
             'src_path' => 'src/',
@@ -49,10 +50,11 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($this->getApplicationPath() . '/src', $config->getSrcPath(), 'Source code path does not match');
         $this->assertEquals($this->getApplicationPath() . '/tests', $config->getTestsPath(), 'Tests path does not match');
+        chdir(__DIR__);
     }
 
     private function getApplicationPath()
     {
-        return '/home/my/application';
+        return realpath(__DIR__ . '/../..');
     }
 }

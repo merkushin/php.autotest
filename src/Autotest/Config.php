@@ -23,17 +23,17 @@ class Config
         }
 
         if (!empty($options['src_path'])) {
-            $srcPath = $options['src_path'];
-            if ($this->isPathRelative($srcPath)) {
-                $srcPath = $this->convertRelativePathToAbsolute($srcPath);
+            $srcPath = realpath($options['src_path']);
+            if ($srcPath === false) {
+                throw new \Exception('Source path not found: ' . $options['src_path']);
             }
             $this->srcPath = $srcPath;
         }
 
         if (!empty($options['tests_path'])) {
-            $testsPath = $options['tests_path'];
-            if ($this->isPathRelative($testsPath)) {
-                $testsPath = $this->convertRelativePathToAbsolute($testsPath);
+            $testsPath = realpath($options['tests_path']);
+            if ($testsPath === false) {
+                throw new \Exception('Tests path not found: ' . $options['tests_path']);
             }
             $this->testsPath = $testsPath;
         }
@@ -86,32 +86,5 @@ class Config
     public function getTimeout()
     {
         return $this->timeout;
-    }
-
-    /**
-     * Check if path is relative
-     *
-     * @param string $path
-     * @return bool
-     */
-    private function isPathRelative($path)
-    {
-        if (substr($path, 0, 1) == DIRECTORY_SEPARATOR) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Do path absolute: prepend relative path with application path
-     *
-     * @param string $path
-     * @return string
-     */
-    private function convertRelativePathToAbsolute($path)
-    {
-        return $this->applicationPath . DIRECTORY_SEPARATOR .
-            rtrim($path, DIRECTORY_SEPARATOR);
     }
 }
