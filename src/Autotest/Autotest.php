@@ -1,10 +1,6 @@
 <?php
 namespace Autotest;
 
-require_once 'Watcher.php';
-require_once 'Extractor.php';
-require_once 'Runner.php';
-
 class Autotest
 {
     /**
@@ -57,6 +53,7 @@ class Autotest
         $extractor = new Extractor();
         $extractor->setSrcPath($this->config->getSrcPath());
         $extractor->setTestsPath($this->config->getTestsPath());
+        $extractor->setTestSuffix($this->config->getTestSuffix());
 
         while (true) {
             $changedPaths = array();

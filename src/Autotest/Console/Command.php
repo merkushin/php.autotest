@@ -1,9 +1,6 @@
 <?php
 namespace Autotest\Console;
 
-require_once __DIR__ . '/../Config.php';
-require_once __DIR__ . '/../Autotest.php';
-
 use Autotest\Autotest;
 use Autotest\Config;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
@@ -37,6 +34,12 @@ class Command extends ConsoleCommand
             null,
             InputOption::VALUE_REQUIRED,
             'Custom path to the tests directory'
+        );
+
+        $this->addOption(
+            'suffix',
+            null.
+            InputOption::VALUE_OPTIONAL
         );
 
         $this->addOption(

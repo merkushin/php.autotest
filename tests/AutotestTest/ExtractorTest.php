@@ -1,7 +1,7 @@
 <?php
-namespace Autotest;
+namespace AutotestTest;
 
-require_once __DIR__ . '/../../src/Autotest/Extractor.php';
+use Autotest\Extractor;
 
 class ExtractorTest extends \PHPUnit_Framework_TestCase
 {
@@ -80,15 +80,17 @@ class ExtractorTest extends \PHPUnit_Framework_TestCase
         $appPath = realpath(__DIR__ . '/../../');
         $srcPath = $appPath . '/src';
         $testsPath = $appPath . '/tests';
+        $testSuffix = 'Test';
 
         $extractor = new Extractor();
         $extractor->setSrcPath($srcPath);
         $extractor->setTestsPath($testsPath);
+        $extractor->setTestSuffix($testSuffix);
         $extractor->setPaths(array(
             $srcPath . '/Autotest/Config.php',
         ));
 
-        $this->assertEquals($testsPath . '/Autotest/ConfigTest.php', $extractor->extract());
+        $this->assertEquals($testsPath . '/AutotestTest/ConfigTest.php', $extractor->extract());
     }
 
     public function testExtractProcessedPathShouldExist()

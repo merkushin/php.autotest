@@ -1,7 +1,7 @@
 <?php
-namespace Autotest;
+namespace AutotestTest;
 
-require_once __DIR__ . '/../../src/Autotest/Config.php';
+use Autotest\Config;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {

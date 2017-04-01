@@ -1,7 +1,7 @@
 <?php
-namespace Autotest;
+namespace AutotestTest;
 
-require_once realpath(__DIR__ . '/../../src/Autotest/Runner.php');
+use Autotest\Runner;
 
 class RunnerTest extends \PHPUnit_Framework_TestCase
 {

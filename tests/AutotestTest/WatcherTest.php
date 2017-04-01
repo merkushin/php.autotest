@@ -1,7 +1,7 @@
 <?php
-namespace Autotest;
+namespace AutotestTest;
 
-require_once realpath(__DIR__ . '/../../src/Autotest/Watcher.php');
+use Autotest\Watcher;
 
 class WatcherTest extends \PHPUnit_Framework_TestCase
 {

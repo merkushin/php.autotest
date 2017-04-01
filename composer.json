@@ -1,5 +1,33 @@
 {
+    "name": "merkushin/php.autotest",
+    "description": "Run tests automatically",
+    "type": "library",
+    "keywords": [
+        "test",
+        "autotest"
+    ],
+    "authors": [
+        {
+            "name": "Dmitry Merkushin",
+            "email": "merkushin@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Autotest": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "AutotestTest": "tests/"
+        }
+    },
     "require": {
-        "symfony/console": "2.4.*"
-    }
+        "symfony/console": "2.4.*",
+        "phpunit/phpunit": "4.8.*"
+    },
+    "bin": [
+        "bin/autotest.php"
+    ]
 }

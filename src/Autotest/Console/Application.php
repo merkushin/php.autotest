@@ -1,8 +1,6 @@
 <?php
 namespace Autotest\Console;
 
-require_once __DIR__ . '/Command.php';
-
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Input\InputInterface;
 

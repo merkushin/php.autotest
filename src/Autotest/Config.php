@@ -7,6 +7,7 @@ class Config
     private $cmd = 'phpunit';
     private $srcPath = '';
     private $testsPath = '';
+    private $testSuffix = 'Test';
     private $timeout = 1;
 
     public function __construct($applicationPath)
@@ -36,6 +37,10 @@ class Config
                 throw new \Exception('Tests path not found: ' . $options['tests_path']);
             }
             $this->testsPath = $testsPath;
+        }
+
+        if (!empty($options['suffix'])) {
+            $this->testSuffix = $options['suffix'];
         }
 
         if (!empty($options['timeout'])) {
@@ -76,6 +81,14 @@ class Config
     public function getTestsPath()
     {
         return $this->testsPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTestSuffix()
+    {
+        return $this->testSuffix;
     }
 
     /**

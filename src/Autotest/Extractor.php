@@ -5,6 +5,7 @@ class Extractor
 {
     private $srcPath;
     private $testsPath;
+    private $testSuffix;
     private $paths;
 
     public function setPaths($paths)
@@ -36,8 +37,15 @@ class Extractor
         foreach ($this->paths as $index => $path) {
             if (substr($path, 0, strlen($this->srcPath) + 1) == $this->srcPath . DIRECTORY_SEPARATOR) {
                 $replacedPath = str_replace($this->srcPath, $this->testsPath, $path);
+
                 $info = pathinfo($replacedPath);
-                $processedPath = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . 'Test.' . $info['extension'];
+                $dirName = $info['dirname'];
+
+                if ($this->testSuffix) {
+                    $dirName = $this->mixinTestSuffix($dirName);
+                }
+
+                $processedPath = $dirName . DIRECTORY_SEPARATOR . $info['filename'] . 'Test.' . $info['extension'];
                 if (file_exists($processedPath)) {
                     $this->paths[$index] = $processedPath;
                 } else {
@@ -45,6 +53,24 @@ class Extractor
                 }
             }
         }
+    }
+
+    private function mixinTestSuffix($path)
+    {
+        $relatedPath = substr($path, mb_strlen($this->testsPath));
+        $pathParts = explode(DIRECTORY_SEPARATOR, $relatedPath);
+        $pathParts = array_filter($pathParts);
+        $pathParts = array_values($pathParts);
+
+        if (count($pathParts)) {
+            if (isset($pathParts[0])) {
+                $pathParts[0] = $pathParts[0] . $this->testSuffix;
+            }
+
+            $path = $this->testsPath . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathParts);
+        }
+
+        return $path;
     }
 
     private function sortPaths()
@@ -123,5 +149,10 @@ class Extractor
     public function setTestsPath($testsPath)
     {
         $this->testsPath = $testsPath;
+    }
+
+    public function setTestSuffix($suffix)
+    {
+        $this->testSuffix = $suffix;
     }
 }
